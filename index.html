@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | WebGlTest</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/WebGLTest.json", {onProgress: UnityProgress});
+    </script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="unityContainer" style="width: 960px; height: 600px"></div>
+      <div class="footer">
+        <div class="webgl-logo"></div>
+        <div class="fullscreen" onclick="unityInstance.SetFullscreen(1)"></div>
+        <div class="title">WebGlTest</div>
+      </div>
+    </div>
+    <div class="flex-padding"></div>
+        <div id="output">
+            <div name="utc">--</div>
+            <div name="et">--</div>
+            <div name="mpo_position">--</div>
+        </div>
+        <div class="flex-padding"></div>
+
+        <script src="./index.js" type="module"></script>
+        <script>
+            function talk2Unity(unityinstance) {
+              unityinstance.SendMessage('Text', 'SetString', document.querySelector('[name="mpo_position"]').childNodes[0].textContent)
+              return
+            }
+        </script>
+        <script>
+            var intervalId = window.setInterval(function(){
+              talk2Unity(unityInstance);
+            }, 100);
+        </script>
+
+  </body>
+</html>
