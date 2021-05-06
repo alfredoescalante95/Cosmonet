@@ -64,6 +64,7 @@ Implementation Notes
                            '$KERNELS/pck/earth_070425_370426_predict.bpc'
 
                            '$KERNELS/sclk/bc_mpo_step_20210204.tsc'
+                           '$KERNELS/sclk/bc_mpo_fict_20181127.tsc'
 
                            '$KERNELS/spk/de432s.bsp'
                            '$KERNELS/spk/bc_mpo_fcp_00094_20181020_20251101_v01.bsp'

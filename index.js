@@ -15,6 +15,7 @@ import { Spice } from './src/index.js';
         './kernels/ck/bc_mpo_sc_sct_50041_20181019_20251219_f20181127_v02.bc',
 
         './kernels/sclk/bc_mpo_step_20210204.tsc',
+        './kernels/sclk/bc_mpo_fict_20181127.tsc',
 
         './kernels/pck/pck00010.tpc',
 
@@ -29,7 +30,7 @@ import { Spice } from './src/index.js';
 
     const utcEl = document.querySelector('[name="utc"]');
     const etEl = document.querySelector('[name="et"]');
-    const scPos = document.querySelector('[name="mpo_position"]');
+    const sunPos = document.querySelector('[name="sun_position"]');
 
     setInterval(() => {
 
@@ -38,11 +39,11 @@ import { Spice } from './src/index.js';
 
         const et = spiceInstance.utc2et(utc);
 
-        const scEl = spiceInstance.spkpos('MPO', et, 'J2000', 'LT+S', 'SUN').ptarg;
+        const scEl = spiceInstance.spkpos('SUN', et, 'MPO_SPACECRAFT', 'NONE', 'MPO').ptarg;
 
         utcEl.childNodes[0].textContent = utc;
         etEl.childNodes[0].textContent = et;
-        scPos.childNodes[0].textContent = `${scEl[0].toFixed(3)}, ${scEl[1].toFixed(3)}, ${scEl[2].toFixed(3)}`;
+        sunPos.childNodes[0].textContent = `${scEl[0].toFixed(3)}, ${scEl[1].toFixed(3)}, ${scEl[2].toFixed(3)}`;
 
     }, 100);
 
