@@ -28,20 +28,23 @@
       </div>
     </div>
 
-        <script src="./index.js" type="module"></script>
+        <script type="module">
+            import {runSpice} from './index.js';
+            (async () => {
+                var trajData = await runSpice()
+                var intervalId = window.setInterval(
+                    function(){talk2Unity(unityInstance, trajData);}, 100);
+            })()
+        </script>
         <script>
-            function talk2Unity(unityinstance) {
+            function talk2Unity(unityinstance, trajdata) {
               unityinstance.SendMessage('Sun', 'SetXPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[0]);
               unityinstance.SendMessage('Sun', 'SetYPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[2]);
               unityinstance.SendMessage('Sun', 'SetZPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[1]);
               unityinstance.SendMessage('UTC', 'SetUtcDate', document.querySelector('[name="utc"]').childNodes[0].textContent);
+              unityinstance.SendMessage('Text1 (1)', 'SetUtcDate', trajdata);
               return
             }
-        </script>
-        <script>
-            var intervalId = window.setInterval(function(){
-              talk2Unity(unityInstance);
-            }, 100);
         </script>
 
   </body>

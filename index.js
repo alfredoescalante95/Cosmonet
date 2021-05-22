@@ -1,6 +1,6 @@
 import { Spice } from './src/index.js';
 
-( async function() {
+export async function runSpice() {
 
     const spiceInstance = await new Spice().init();
     window.spiceInstance = spiceInstance;
@@ -32,6 +32,8 @@ import { Spice } from './src/index.js';
     const etEl = document.querySelector('[name="et"]');
     const sunPos = document.querySelector('[name="sun_position"]');
 
+    var trajData = "Test ";
+
     setInterval(() => {
 
         let utc = new Date().toISOString();
@@ -43,8 +45,16 @@ import { Spice } from './src/index.js';
 
         utcEl.childNodes[0].textContent = utc;
         etEl.childNodes[0].textContent = et;
-        sunPos.childNodes[0].textContent = `${scEl[0].toFixed(3)}, ${scEl[1].toFixed(3)}, ${scEl[2].toFixed(3)}`;
+        sunPos.childNodes[0].textContent = `${scEl[0].toFixed(6)}, ${scEl[1].toFixed(6)}, ${scEl[2].toFixed(6)}`;
+
+        trajData = utc;
+        //var i;
+        //for (i = 0; i < 60; i++) {
+        //    const trajPlot  = spiceInstance.spkpos('MPO', et - i*3600, 'MPO_SPACECRAFT', 'NONE', 'SUN').ptarg;
+        //    trajData += `${(trajPlot[0] + scEl[0]).toFixed(6)}, ${(trajPlot[1] + scEl[1]).toFixed(6)}, ${(trajPlot[2] + scEl[2]).toFixed(6)} `;
+        //}
 
     }, 100);
 
-} )();
+    return trajData;
+};
