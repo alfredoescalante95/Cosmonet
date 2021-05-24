@@ -30,17 +30,23 @@ export async function runSpice() {
 
     const utcEl = document.querySelector('[name="utc"]');
     const etEl = document.querySelector('[name="et"]');
+    const etFactorEl = document.querySelector('[name="et_factor"]');
     const sunPos = document.querySelector('[name="sun_position"]');
 
     var trajData = "Test ";
 
+    let utc = new Date().toISOString();
+    utc = utc.slice(0, utc.length - 1);
+
+    etFactorEl.childNodes[0].textContent = 1;
+
+    var et = spiceInstance.utc2et(utc);
+
     setInterval(() => {
 
-        let utc = new Date().toISOString();
-        utc = utc.slice(0, utc.length - 1);
+        et += 0.1 * parseFloat(etFactorEl.childNodes[0].textContent);
 
-        const et = spiceInstance.utc2et(utc);
-
+        const utc = spiceInstance.et2utc(et, 'C', 0);
         const scEl = spiceInstance.spkpos('SUN', et, 'MPO_SPACECRAFT', 'NONE', 'MPO').ptarg;
 
         utcEl.childNodes[0].textContent = utc;
