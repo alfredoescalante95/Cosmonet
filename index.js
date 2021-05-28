@@ -35,6 +35,7 @@ export async function runSpice() {
     const etFactorEl = document.querySelector('[name="et_factor"]');
     const scQuatEl = document.querySelector('[name="sc_quat"]');
     const sunPos = document.querySelector('[name="sun_position"]');
+    const earthPos = document.querySelector('[name="earth_position"]');
     const venusPos = document.querySelector('[name="venus_position"]');
     const mercuryPos = document.querySelector('[name="mercury_position"]');
 
@@ -52,15 +53,17 @@ export async function runSpice() {
         et += 0.1 * parseFloat(etFactorEl.childNodes[0].textContent);
 
         const utc = spiceInstance.et2utc(et, 'C', 0);
-        const scEl = spiceInstance.spkpos('SUN', et, 'J2000', 'NONE', 'MPO').ptarg;
-        const scVenus = spiceInstance.spkpos('VENUS', et, 'J2000', 'NONE', 'MPO').ptarg;
-        const scMercury = spiceInstance.spkpos('MERCURY', et, 'J2000', 'NONE', 'MPO').ptarg;
-        const R = spiceInstance.pxform('MPO_SPACECRAFT', 'J2000', et);
+        const scEl = spiceInstance.spkpos('SUN', et, 'ECLIPJ2000', 'NONE', 'MPO').ptarg;
+        const scEarth = spiceInstance.spkpos('EARTH', et, 'ECLIPJ2000', 'NONE', 'MPO').ptarg;
+        const scVenus = spiceInstance.spkpos('VENUS', et, 'ECLIPJ2000', 'NONE', 'MPO').ptarg;
+        const scMercury = spiceInstance.spkpos('MERCURY', et, 'ECLIPJ2000', 'NONE', 'MPO').ptarg;
+        const R = spiceInstance.pxform('MPO_SPACECRAFT', 'ECLIPJ2000', et);
         const scM = spiceInstance.m2q(R);
 
         utcEl.childNodes[0].textContent = utc;
         etEl.childNodes[0].textContent = et;
         sunPos.childNodes[0].textContent = `${scEl[0].toFixed(6)}, ${scEl[1].toFixed(6)}, ${scEl[2].toFixed(6)}`;
+        earthPos.childNodes[0].textContent = `${scEarth[0].toFixed(6)}, ${scEarth[1].toFixed(6)}, ${scEarth[2].toFixed(6)}`;
         venusPos.childNodes[0].textContent = `${scVenus[0].toFixed(6)}, ${scVenus[1].toFixed(6)}, ${scVenus[2].toFixed(6)}`;
         mercuryPos.childNodes[0].textContent = `${scMercury[0].toFixed(6)}, ${scMercury[1].toFixed(6)}, ${scMercury[2].toFixed(6)}`;
         scQuatEl.childNodes[0].textContent = `${scM[0].toFixed(6)}, ${scM[1].toFixed(6)}, ${scM[2].toFixed(6)}, ${scM[3].toFixed(6)}`;

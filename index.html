@@ -14,12 +14,13 @@
   </head>
   <body>
     <div class="flex-padding"></div>
-        <div id="output" style="position: fixed; left: 30%; bottom: 20%">
+        <div id="output" style="position: fixed; left: 30%; bottom: 40%">
             <div name="utc">--</div>
             <div name="et">--</div>
             <div name="et_factor">--</div>
             <div name="sc_quat">--</div>
             <div name="sun_position">--</div>
+            <div name="earth_position">--</div>
             <div name="venus_position">--</div>
             <div name="mercury_position">--</div>
         </div>
@@ -45,6 +46,10 @@
               unityinstance.SendMessage('Sun', 'SetXPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[0]);
               unityinstance.SendMessage('Sun', 'SetYPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[2]);
               unityinstance.SendMessage('Sun', 'SetZPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[1]);
+
+              unityinstance.SendMessage('Earth', 'SetXPosition', document.querySelector('[name="earth_position"]').childNodes[0].textContent.split(",")[0]);
+              unityinstance.SendMessage('Earth', 'SetYPosition', document.querySelector('[name="earth_position"]').childNodes[0].textContent.split(",")[2]);
+              unityinstance.SendMessage('Earth', 'SetZPosition', document.querySelector('[name="earth_position"]').childNodes[0].textContent.split(",")[1]);
 
               unityinstance.SendMessage('Venus', 'SetXPosition', document.querySelector('[name="venus_position"]').childNodes[0].textContent.split(",")[0]);
               unityinstance.SendMessage('Venus', 'SetYPosition', document.querySelector('[name="venus_position"]').childNodes[0].textContent.split(",")[2]);
