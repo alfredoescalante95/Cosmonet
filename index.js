@@ -11,8 +11,10 @@ export async function runSpice() {
         './kernels/lsk/naif0012.tls',
         './kernels/spk/de432s.bsp',
         './kernels/spk/bc_mpo_fcp_00094_20181020_20251101_v01.bsp',
+        './kernels/spk/bc_mpo_mcp_50034_20251205_20260314_v02.bsp',
 
         './kernels/ck/bc_mpo_sc_sct_50041_20181019_20251219_f20181127_v02.bc',
+        './kernels/ck/bc_mpo_sc_sct_50034_20251205_20260314_f20181127_v02.bc',
 
         './kernels/sclk/bc_mpo_step_20210204.tsc',
         './kernels/sclk/bc_mpo_fict_20181127.tsc',
@@ -31,7 +33,10 @@ export async function runSpice() {
     const utcEl = document.querySelector('[name="utc"]');
     const etEl = document.querySelector('[name="et"]');
     const etFactorEl = document.querySelector('[name="et_factor"]');
+    const scQuatEl = document.querySelector('[name="sc_quat"]');
     const sunPos = document.querySelector('[name="sun_position"]');
+    const venusPos = document.querySelector('[name="venus_position"]');
+    const mercuryPos = document.querySelector('[name="mercury_position"]');
 
     var trajData = "Test ";
 
@@ -47,11 +52,18 @@ export async function runSpice() {
         et += 0.1 * parseFloat(etFactorEl.childNodes[0].textContent);
 
         const utc = spiceInstance.et2utc(et, 'C', 0);
-        const scEl = spiceInstance.spkpos('SUN', et, 'MPO_SPACECRAFT', 'NONE', 'MPO').ptarg;
+        const scEl = spiceInstance.spkpos('SUN', et, 'J2000', 'NONE', 'MPO').ptarg;
+        const scVenus = spiceInstance.spkpos('VENUS', et, 'J2000', 'NONE', 'MPO').ptarg;
+        const scMercury = spiceInstance.spkpos('MERCURY', et, 'J2000', 'NONE', 'MPO').ptarg;
+        const R = spiceInstance.pxform('MPO_SPACECRAFT', 'J2000', et);
+        const scM = spiceInstance.m2q(R);
 
         utcEl.childNodes[0].textContent = utc;
         etEl.childNodes[0].textContent = et;
         sunPos.childNodes[0].textContent = `${scEl[0].toFixed(6)}, ${scEl[1].toFixed(6)}, ${scEl[2].toFixed(6)}`;
+        venusPos.childNodes[0].textContent = `${scVenus[0].toFixed(6)}, ${scVenus[1].toFixed(6)}, ${scVenus[2].toFixed(6)}`;
+        mercuryPos.childNodes[0].textContent = `${scMercury[0].toFixed(6)}, ${scMercury[1].toFixed(6)}, ${scMercury[2].toFixed(6)}`;
+        scQuatEl.childNodes[0].textContent = `${scM[0].toFixed(6)}, ${scM[1].toFixed(6)}, ${scM[2].toFixed(6)}, ${scM[3].toFixed(6)}`;
 
         trajData = utc;
         //var i;
@@ -60,7 +72,7 @@ export async function runSpice() {
         //    trajData += `${(trajPlot[0] + scEl[0]).toFixed(6)}, ${(trajPlot[1] + scEl[1]).toFixed(6)}, ${(trajPlot[2] + scEl[2]).toFixed(6)} `;
         //}
 
-    }, 100);
+    }, 10);
 
     return trajData;
 };

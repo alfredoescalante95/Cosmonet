@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Cosmoweb</title>
-    <link rel="shortcut icon" href="TemplateData/apklogo2b.png">
+    <link rel="shortcut icon" href="apklogo2b.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
@@ -18,7 +18,10 @@
             <div name="utc">--</div>
             <div name="et">--</div>
             <div name="et_factor">--</div>
+            <div name="sc_quat">--</div>
             <div name="sun_position">--</div>
+            <div name="venus_position">--</div>
+            <div name="mercury_position">--</div>
         </div>
     <div class="flex-padding"></div>
     <div class="webgl-content" style="width: 90%; height: 85%">
@@ -34,7 +37,7 @@
             (async () => {
                 var trajData = await runSpice()
                 var intervalId = window.setInterval(
-                    function(){talk2Unity(unityInstance, trajData);}, 100);
+                    function(){talk2Unity(unityInstance, trajData);}, 10);
             })()
         </script>
         <script>
@@ -42,7 +45,22 @@
               unityinstance.SendMessage('Sun', 'SetXPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[0]);
               unityinstance.SendMessage('Sun', 'SetYPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[2]);
               unityinstance.SendMessage('Sun', 'SetZPosition', document.querySelector('[name="sun_position"]').childNodes[0].textContent.split(",")[1]);
+
+              unityinstance.SendMessage('Venus', 'SetXPosition', document.querySelector('[name="venus_position"]').childNodes[0].textContent.split(",")[0]);
+              unityinstance.SendMessage('Venus', 'SetYPosition', document.querySelector('[name="venus_position"]').childNodes[0].textContent.split(",")[2]);
+              unityinstance.SendMessage('Venus', 'SetZPosition', document.querySelector('[name="venus_position"]').childNodes[0].textContent.split(",")[1]);
+
+              unityinstance.SendMessage('Mercury', 'SetXPosition', document.querySelector('[name="mercury_position"]').childNodes[0].textContent.split(",")[0]);
+              unityinstance.SendMessage('Mercury', 'SetYPosition', document.querySelector('[name="mercury_position"]').childNodes[0].textContent.split(",")[2]);
+              unityinstance.SendMessage('Mercury', 'SetZPosition', document.querySelector('[name="mercury_position"]').childNodes[0].textContent.split(",")[1]);
+
+              unityinstance.SendMessage('mcs', 'SetXQuat', document.querySelector('[name="sc_quat"]').childNodes[0].textContent.split(",")[1]);
+              unityinstance.SendMessage('mcs', 'SetYQuat', document.querySelector('[name="sc_quat"]').childNodes[0].textContent.split(",")[2]);
+              unityinstance.SendMessage('mcs', 'SetZQuat', document.querySelector('[name="sc_quat"]').childNodes[0].textContent.split(",")[3]);
+              unityinstance.SendMessage('mcs', 'SetWQuat', document.querySelector('[name="sc_quat"]').childNodes[0].textContent.split(",")[0]);
+              unityinstance.SendMessage('mcs', 'SetRotation');
               unityinstance.SendMessage('UTC', 'SetUtcDate', document.querySelector('[name="utc"]').childNodes[0].textContent);
+              unityinstance.SendMessage('Scale', 'SetTimeScale', document.querySelector('[name="et_factor"]').childNodes[0].textContent.split(".")[0]);
               unityinstance.SendMessage('Text1 (1)', 'SetUtcDate', trajdata);
               return
             }
