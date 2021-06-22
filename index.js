@@ -10,11 +10,13 @@ export async function runSpice() {
         // https://naif.jpl.nasa.gov/pub/naif/pds/data/msl-m-spice-6-v1.0/mslsp_1000/extras/mk/msl_chronos_v07.tm
         './kernels/lsk/naif0012.tls',
         './kernels/spk/de432s.bsp',
-        './kernels/spk/bc_mpo_fcp_00094_20181020_20251101_v01.bsp',
-        './kernels/spk/bc_mpo_mcp_50034_20251205_20260314_v02.bsp',
+        './kernels/spk/bc_mpo_mcp_50041_20181019_20251219_v01.bsp',
+        './kernels/spk/bc_mpo_mcp_50034_20251205_20260314_v03.bsp',
+        './kernels/spk/bc_mpo_mlt_50037_20260314_20280529_v03.bsp',
 
         './kernels/ck/bc_mpo_sc_sct_50041_20181019_20251219_f20181127_v02.bc',
         './kernels/ck/bc_mpo_sc_sct_50034_20251205_20260314_f20181127_v02.bc',
+        './kernels/ck/bc_mpo_sc_slt_50028_20260314_20280529_f20181127_v02.bc',
 
         './kernels/sclk/bc_mpo_step_20210204.tsc',
         './kernels/sclk/bc_mpo_fict_20181127.tsc',
